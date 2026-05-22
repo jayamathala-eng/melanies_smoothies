@@ -1,13 +1,14 @@
 # Import python packages
 import streamlit as st
+from snowflake.snowpark import Session
 from snowflake.snowpark.functions import col
 # Write directly to the app
 st.title(":cup_with_straw: Example Streamlit App :cup_with_straw:")
 st.write(  """Choose the Fruits you want in your Smoothie!.""")
 name_on_order=st.text_input('Name on Smoothie')
 st.write('The name on your Smoothie will be',name_on_order)
-cnx= st.connection("snowflake")
-session = cnx.session()
+# cnx= st.connection("snowflake")
+session = Session.builder.configs(st.secrets["snowflake"]).create()
 my_dataframe = session.table("smoothies.public.fruit_options").select('FRUIT_NAME')
 ingredients_list=st.multiselect('Choose upto 5 Ingredients:',my_dataframe)
 if ingredients_list and len(ingredients_list) > 5:
