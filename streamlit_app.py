@@ -37,7 +37,7 @@ elif ingredients_list:
 
 # Fixed indentation, removed markdown link syntax, and printed the JSON payload
 smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")  
-if smoothiefroot_response.status_with == 200:
+if smoothiefroot_response.status_code == 200:
     st.json(smoothiefroot_response.json())
 else:
     st.error("Could not fetch fruit details from API.")
